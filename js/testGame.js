@@ -6,9 +6,8 @@
         game.load.image('background', 'assets/bg.png');
         game.load.image('ground', 'assets/platform.png');
         game.load.image('star', 'assets/star.png');
-        game.load.spritesheet('commoncell', 'assets/CommonCell_Sprite.png', 64, 52);
+        game.load.spritesheet('commoncell', 'assets/CommonCell2_Sprite.png', 64, 64);
         game.load.spritesheet('whitebloodcell', 'assets/CommonCell_Sprite.png', 64, 64);
-
     }
 
     var player;
@@ -26,24 +25,32 @@
         // Add background sprite to game instance
         background = game.add.sprite(0, 0, 'background');
 
+
+
         // Create some cells
         cells = game.add.group();
         //  We will enable physics for any star that is created in this group
         cells.enableBody = true;
 
-        for (var i = 0; i < 6; i++)
+        var numberOfCells = 150;
+        for (var i = 0; i < numberOfCells; i++)
         {
             //  Create a star inside of the 'cells' group
-            var tempCell = cells.create(i * game.width / 6, 0, 'commoncell');
+            var tempCell = cells.create(i * game.width / numberOfCells, i * game.height/numberOfCells, 'commoncell');
 
             //  Add gravity
-            tempCell.body.gravity.y = 300;
+            tempCell.body.gravity.y = 0;
             //  This just gives each star a slightly random bounce value
             tempCell.body.bounce.y = 0.7 + Math.random() * 0.2;
-            tempCell.body.bounce.y = 0.7 + Math.random() * 0.2;
+            tempCell.body.bounce.x = 0.7 + Math.random() * 0.2;
             tempCell.body.collideWorldBounds = true;
+            tempCell.body.velocity.x = 100 * Math.random();
+            tempCell.body.velocity.y = 100 * Math.random();
             tempCell.animations.add('idle');
             tempCell.animations.play('idle', 10, true);
+            tempCell.body.height = 35;
+            tempCell.body.width = 35;
+
         }
 
         scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -56,20 +63,28 @@
 
         //Add collision between cells and platforms
         game.physics.arcade.collide(cells, cells);
+        //game.physics.arcade.overlap(cells, cells, cellCollision, null, this);
 
         if (cursors.left.isDown)
         {
-
+            //Camera movement
         }
         else if (cursors.right.isDown)
         {
-
+            //camera movement
         }
-        //  Allow the player to jump if they are touching the ground.
-        if (cursors.up.isDown /*&& player.body.touching.down*/)
+        else if (cursors.up.isDown)
         {
-
+            //camera movement
         }
-
+        else if (cursors.down.isDown)
+        {
+            //camera movement
+        }
+        /*
+        for(cell in cells) {
+            cell.body.velocity.x += 1.0;
+            cell.body.velocity.y += 1.0;
+        }*/
     }
 })();
