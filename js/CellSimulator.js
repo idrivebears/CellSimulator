@@ -7,7 +7,7 @@
     - Make white blood cell automata for movement and cell life
     - Make DNA mutation searcher
     - Implement Bone Marrow (white blood cell creator) 
-    - 
+    - Implement cell killing (removing from cell group, might be a bit tricky)
 */
 
 
