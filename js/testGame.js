@@ -50,7 +50,6 @@
             tempCell.animations.play('idle', 10, true);
             tempCell.body.height = 35;
             tempCell.body.width = 35;
-
         }
 
         scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
