@@ -1,3 +1,16 @@
+/*
+    Project todo list:
+    - Abstract cells into their own class
+    - Make cell automata for movement and cell life
+    - Make cell DNA mutation system
+    - Make cell reproduction system (adding elements to the cell group might be a bit hard)
+    - Make white blood cell automata for movement and cell life
+    - Make DNA mutation searcher
+    - Implement Bone Marrow (white blood cell creator) 
+    - 
+*/
+
+
 (function () {
     var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
