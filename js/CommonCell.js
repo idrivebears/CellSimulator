@@ -10,8 +10,8 @@ var CC_STATES = {
     DEATH: {value: 4, name:"DEATH"}
 };
 
-var CommonCell = function(game, x, y, parentDNA) {
-    Phaser.Sprite.call(this, game, x, y, 'cell');
+function CommonCell(game, x, y, parentDNA) {
+    Phaser.Sprite.call(this, game, x, y, 'commoncell');
     this.x = x;
     this.y = y;
     this.DNA = parentDNA;
@@ -30,14 +30,18 @@ var CommonCell = function(game, x, y, parentDNA) {
     this.animations.play('idle', 10, true);
     this.body.height = 35;
     this.body.width = 35;
+    this.alive = true;
 };
 
-CommonCell.prototype.move = function() {
-    
+CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
+CommonCell.prototype.constructor = CommonCell;
+
+CommonCell.prototype.moveCell = function() {
+
 };
 
-CommonCell.prototype.update = function() {
-    this.move();
+CommonCell.prototype.updateCell = function() {
+    this.moveCell();
 };
 
 CommonCell.prototype.mutateDNA = function() {
@@ -49,6 +53,3 @@ CommonCell.prototype.mutateDNA = function() {
     }
     return result;
 };
-
-CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
-CommonCell.prototype.constructor = CommonCell;
