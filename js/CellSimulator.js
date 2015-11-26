@@ -27,6 +27,9 @@
     var cells;
 
     function create() {
+
+        var testCell = new CommonCell(32,32, "teststringdna");
+
         // Enable aracde physics for game
         game.physics.startSystem(Phaser.Physics.ARCADE);
         
@@ -39,7 +42,7 @@
         //  We will enable physics for any star that is created in this group
         cells.enableBody = true;
 
-        var numberOfCells = 150;
+        var numberOfCells = 5;
         for (var i = 0; i < numberOfCells; i++)
         {
             //  Create a star inside of the 'cells' group
