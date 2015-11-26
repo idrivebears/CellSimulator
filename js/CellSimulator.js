@@ -42,6 +42,8 @@
         cells.enableBody = true;
 
         var numberOfCells = 40;
+        var cellCountText;
+
         for (var i = 0; i < numberOfCells; i++)
         {
             //  Create a star inside of the 'cells' group
@@ -63,6 +65,9 @@
 
         cursors = game.input.keyboard.createCursorKeys();
 
+        //Display amount of cells
+        cellCountText = game.add.text(16, 16, 'Cells: 40', { fontSize: '32px', fill: '#000' });
+        //Use cellCountText.text='Cells: ' + numberOfCells; to update
     }
 
     function update() {
