@@ -3,25 +3,37 @@
 */
 
 var CC_STATES = {
-    BORN : {value: 0, name: "BORN"}, 
-    SEARCH_FOOD : {value: 1, name: "SEARCH_FOOD"}, 
+    BORN : {value: 0, name: "BORN"},
+    SEARCH_FOOD : {value: 1, name: "SEARCH_FOOD"},
     SEARCH_WATER : {value: 2, name: "SEARCH_WATER"},
-    SEARCH_MATE : {value: 3, name: "SEARCH_MATE"}
-    DEATH: {value: 4, name:"DEATH"} 
+    SEARCH_MATE : {value: 3, name: "SEARCH_MATE"},
+    DEATH: {value: 4, name:"DEATH"}
 };
 
-var CommonCell = function(x, y, parentDNA) {
+var CommonCell = function(game, x, y, parentDNA) {
+    Phaser.Sprite.call(this, game, x, y, 'cell');
     this.x = x;
     this.y = y;
     this.DNA = parentDNA;
     this.DNA = this.mutateDNA();
-    this.currentState = ;
-    this.velocityX = 0.0;
-    this.velocityY = 0.0;
+    this.currentState = CC_STATES.BORN;
+
+    game.physics.enable(this, Phaser.Physics.ARCADE);
+
+    this.body.gravity.y = 0;
+    this.body.bounce.x = 0.7;
+    this.body.bounce.y = 0.7;
+    this.body.collideWorldBounds = true;
+    this.body.velocity.x = 100 * Math.random();
+    this.body.velocity.y = 100 * Math.random();
+    this.animations.add('idle');
+    this.animations.play('idle', 10, true);
+    this.body.height = 35;
+    this.body.width = 35;
 };
 
 CommonCell.prototype.move = function() {
-
+    
 };
 
 CommonCell.prototype.update = function() {
@@ -37,3 +49,6 @@ CommonCell.prototype.mutateDNA = function() {
     }
     return result;
 };
+
+CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
+CommonCell.prototype.constructor = CommonCell;
