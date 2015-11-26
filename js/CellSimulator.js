@@ -71,21 +71,22 @@
         game.physics.arcade.collide(cells, cells);
         //game.physics.arcade.overlap(cells, cells, cellCollision, null, this);
 
+        //Camera Movements
         if (cursors.left.isDown)
         {
-            //Camera movement
+            game.camera.x -= 4;
         }
         else if (cursors.right.isDown)
         {
-            //camera movement
+            game.camera.x += 4;
         }
         else if (cursors.up.isDown)
         {
-            //camera movement
+            game.camera.y -= 4;
         }
         else if (cursors.down.isDown)
         {
-            //camera movement
+            game.camera.y += 4;
         }
 
         //Call cell update function
