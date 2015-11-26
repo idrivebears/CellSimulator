@@ -92,4 +92,10 @@
         //Call cell update function
         //Call white blood cell update function
     }
+    //Displays camera info for debugging
+    function render() {
+
+    game.debug.cameraInfo(game.camera, 32, 32);
+
+}
 })();
