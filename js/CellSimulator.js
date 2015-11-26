@@ -23,7 +23,6 @@
 
     var cursors;
     var background;
-
     var cells;
 
     function create() {
@@ -42,7 +41,7 @@
         //  We will enable physics for any star that is created in this group
         cells.enableBody = true;
 
-        var numberOfCells = 5;
+        var numberOfCells = 40;
         for (var i = 0; i < numberOfCells; i++)
         {
             //  Create a star inside of the 'cells' group
