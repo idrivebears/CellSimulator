@@ -69,6 +69,7 @@ function CommonCell(game, x, y, parentDNA) {
 CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
 CommonCell.prototype.constructor = CommonCell;
 
+
 CommonCell.prototype.onDown=function(cell, cursor){
     
     
@@ -83,6 +84,8 @@ CommonCell.prototype.onDown=function(cell, cursor){
     text2= game.add.text(30, 60, "Generation: " , style2);
     text3= game.add.text(30,80, "Hunger: "+this.hunger, style2);
     text4 = game.add.text(30,100, "Has Mated: "+this.mated, style2);
+
+    
 
 
     
@@ -102,7 +105,7 @@ CommonCell.prototype.escKey=function(){
     text4.visible=false;
 
     
-}
+
 
 
    
@@ -199,6 +202,10 @@ CommonCell.prototype.secondElapsed = function() {
         this.matingTime--;
     }
     this.hunger += 1;
+     if(this.game.rnd.integerInRange(0,100)%2 === 0) {
+        this.body.velocity.y = this.body.velocity.y + this.game.rnd.integerInRange(-40, 40);
+        this.body.velocity.x = this.body.velocity.x + this.game.rnd.integerInRange(-40, 40);
+    }
 };
 
 CommonCell.prototype.mutateDNA = function() {
