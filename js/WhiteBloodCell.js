@@ -4,7 +4,7 @@
 
 var WB_STATES = {
     BORN : {value: 0, name: "BORN"},
-    SEARCH_SICKNESS : {value: 1, name: "SEARHC_SICKNESS"},
+    SEARCH_SICKNESS : {value: 1, name: "SEARCH_SICKNESS"},
     KILL_MODE : {value: 2, name: "KILL_MODE"},
     DEATH: {value: 3, name:"DEATH"}
 };
@@ -17,6 +17,7 @@ function WhiteBloodCell(game, x, y, sicknessIndicator) {
     this.currentState = WB_STATES.BORN;
 
     this.isKilling = false;
+    this.secondsInKillMode = 5;
 
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
@@ -45,6 +46,8 @@ WhiteBloodCell.prototype.updateCell = function() {
 
     if(this.currentState == WB_STATES.BORN) {
         // do born animation
+
+
         this.currentState = WB_STATES.SEARCH_SICKNESS;
     }
 
@@ -52,10 +55,16 @@ WhiteBloodCell.prototype.updateCell = function() {
         if(this.isKilling == true) {
             this.currentState = WB_STATES.KILL_MODE;
         }
+        this.tint = 0xF3C2FF;
 
     }
 
     else if(this.currentState == WB_STATES.KILL_MODE) {
+        if(this.isKilling == false) {
+            this.currentState = WB_STATES.SEARCH_SICKNESS;
+            this.secondsInKillMode = 8;
+        }
+
         this.tint = 0xF123D1;
     }
 
@@ -70,10 +79,36 @@ WhiteBloodCell.prototype.secondElapsed = function() {
         this.body.velocity.y = this.body.velocity.y + this.game.rnd.integerInRange(-20, 20);
         this.body.velocity.x = this.body.velocity.x + this.game.rnd.integerInRange(-20, 20);
     }
+
+    if(this.currentState == WB_STATES.KILL_MODE) {
+        this.secondsInKillMode--;
+        if(this.secondsInKillMode == 0) {
+            this.isKilling = false;
+        }
+    }
 };
 
 WhiteBloodCell.prototype.checkCollidedCell = function(commonCell) {
     if(commonCell.currentState == CC_STATES.DEATH) {
-        commonCell.kill();
+        //commonCell.kill();
+    }
+
+    else {
+        // If the cell has already been tagged, mark its death 
+        if(this.isKilling == true && commonCell.isInfected == true) {
+            commonCell.wasKilled = true;
+            commonCell.currentState = CC_STATES.DEATH;
+        }
+        // Tag the cell as infected on the first run
+        else {
+            for(var i = 0; i < this.sicknessIndicator.length; i++) {
+                if(commonCell.DNA.indexOf(this.sicknessIndicator[i]) !== -1) {
+                    console.log("Found infected cell with character: " + this.sicknessIndicator[i]);
+                    commonCell.isInfected = true;
+
+                    this.isKilling = true;
+                }
+            }            
+        }
     }
 };

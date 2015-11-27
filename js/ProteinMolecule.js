@@ -19,10 +19,21 @@ function ProteinMolecule(game, x, y) {
     this.animations.play('idle', 10, true);
     this.body.height = 38;
     this.body.width = 38;
+    
     this.alive = true;
+
+    this.body.height = 0;
+    this.body.width = 0;
 };
 
 ProteinMolecule.prototype = Object.create(Phaser.Sprite.prototype);
 ProteinMolecule.prototype.constructor = ProteinMolecule;
+
+ProteinMolecule.prototype.updateProtein = function() {
+    if(this.body.width ) {
+        this.body.width += 1;
+        this.body.height += 1;
+    }
+};
 
 

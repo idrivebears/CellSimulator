@@ -1,12 +1,10 @@
 /*
     Project todo list:
-    - Make cell automata for movement and cell life
-    - Make cell DNA mutation system
-    - Make cell reproduction system (adding elements to the cell group might be a bit hard)
-    - Make white blood cell automata for movement and cell life
-    - Make DNA mutation searcher
-    - Implement Bone Marrow (white blood cell creator)
-    - Implement cell killing (removing from cell group, might be a bit tricky)
+    -Add animations for killing cells
+    -Add all other animations pretty much
+    -Make infected cells stand out more, maybe increase their size
+    -Make start screen
+    -Improve UI
 */
 
 var DEBUG = false;
@@ -16,8 +14,8 @@ var SimulatorState = function(game) {
     this.whiteBloodCells = null;
     this.proteins = null;
 
-    this.proteinsPerSecond = 5;
-    this.maxProteins = 30;
+    this.proteinsPerSecond = 2;
+    this.maxProteins = 15;
 };
 
 SimulatorState.prototype.preload = function() {
@@ -38,8 +36,8 @@ SimulatorState.prototype.create = function() {
     
 
     // Create initial common cells
-    var startingCells = 30;
-    var startingSeed = "abcdefghijklmnop";
+    var startingCells = 15;
+    var startingSeed = "ab";
 
     this.commonCells = this.game.add.group();
     this.commonCells.enableBody = true;        //  Enable physics for any cell in the group
@@ -53,8 +51,8 @@ SimulatorState.prototype.create = function() {
     }
 
     // Create initial white blood cells
-    startingCells = 10;
-    var sicknessIndicator = ['z', 'w', 'x', 'y', 'r'];
+    startingCells = 2;
+    var sicknessIndicator = ['z', 'r'];
 
     this.whiteBloodCells = this.game.add.group();
     this.commonCells.enableBody = true;
@@ -98,6 +96,11 @@ SimulatorState.prototype.update = function() {
     //Call white blood cell update function
     this.whiteBloodCells.forEachAlive(function(whiteBloodCell){
         whiteBloodCell.updateCell();
+    }, this);
+
+    //Call white blood cell update function
+    this.proteins.forEachAlive(function(protein){
+        protein.updateProtein();
     }, this);
 };
 
