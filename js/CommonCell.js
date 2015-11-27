@@ -71,10 +71,6 @@ CommonCell.prototype.constructor = CommonCell;
 
 CommonCell.prototype.onDown=function(cell, cursor){
     
-    
-   
-
-
     var style = { font: "14px Arial", fill: "#FFFFFF", wordWrap: false, wordWrapWidth: this.width, align: "center" };
     var style2= { font: "12px Arial", fill: "#FFFFFF", wordWrap: false, wordWrapWidth: this.width, align: "left" };
    
@@ -84,30 +80,16 @@ CommonCell.prototype.onDown=function(cell, cursor){
     text3= game.add.text(30,80, "Hunger: "+this.hunger, style2);
     text4 = game.add.text(30,100, "Has Mated: "+this.mated, style2);
 
-
-    
-
     this.isSelected = true;
-
-
-    
-
-   
 }
+
 CommonCell.prototype.escKey=function(){
     ui.visible=false;
     text1.visible=false;
     text2.visible=false;
     text3.visible=false;
-    text4.visible=false;
-
-    
+    text4.visible=false;    
 }
-
-
-   
-};
-
 
 CommonCell.prototype.moveCell = function() {
 
