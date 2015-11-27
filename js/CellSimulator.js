@@ -147,5 +147,5 @@ SimulatorState.prototype.onSecondElapsed = function() {
 
 
 //Create new game with the simulator starting state
-var game = new Phaser.Game(1280, 600, Phaser.AUTO, 'game');
+var game = new Phaser.Game(1280, 600, Phaser.CANVAS, 'game');
 game.state.add('simulator', SimulatorState, true);
