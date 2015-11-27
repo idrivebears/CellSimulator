@@ -84,7 +84,7 @@ CommonCell.prototype.moveCell = function() {
 };
 
 CommonCell.prototype.handleDeath = function() {
-    alert("died for sins");
+    
 };
 
 
