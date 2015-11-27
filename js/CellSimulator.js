@@ -22,9 +22,12 @@ var SimulatorState = function(game) {
 
 SimulatorState.prototype.preload = function() {
     this.game.load.image('background', 'assets/bg.png');
+    this.game.load.image('ui', 'assets/ui.png');
     this.game.load.spritesheet('commoncell', 'assets/CommonCell2_Sprite.png', 64, 64);
     this.game.load.spritesheet('protein', 'assets/protein.png', 64 ,64);
     this.game.load.spritesheet('whitebloodcell', 'assets/WhiteBloodCell_Sprite.png', 64, 64);
+
+
 
 };
 
@@ -35,6 +38,7 @@ SimulatorState.prototype.create = function() {
 
     // Set background to trippy ass dank ass cell type thing
     background = this.game.add.sprite(0, 0, 'background');
+    
 
     // Create initial common cells
     var startingCells = 50;
@@ -70,6 +74,8 @@ SimulatorState.prototype.create = function() {
     //setting 1s tick
     console.log("Setting 1s tick");
     this.game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
+
+    ui = this.game.add.sprite(30,35, 'ui');
 
 };
 

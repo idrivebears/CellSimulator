@@ -19,6 +19,7 @@ function CommonCell(game, x, y, parentDNA) {
 
     //how hungry the cell is, if it gets to 100, the cell dies.
     this.hunger = 1;
+    this.mated = false;
 
     this.body.gravity.y = 0;
     this.body.bounce.x = 1.0;
@@ -71,14 +72,23 @@ CommonCell.prototype.updateCell = function() {
         if(this.hunger <= 1) {
             this.currentState = CC_STATES.SEARCH_MATE;
         }
+        if(this.hunger >= 100) {
+            this.currentState = CC_STATES.DEATH;
+        }
     }
 
     else if(this.currentState == CC_STATES.SEARCH_MATE) {
-        // set search mate on
+        if(this.hunger >= 50) {
+            this.currentState = CC_STATES.SEARCH_FOOD;
+        }
+        if(this.mated == true) {
+            this.currentState = CC_STATES.DEATH;
+        }
     }
 
     else if(this.currentState == CC_STATES.DEATH) {
         // set death animation
+        this.tint = 0xFF195B;
     }
 
 

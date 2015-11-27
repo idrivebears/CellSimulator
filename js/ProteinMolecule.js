@@ -17,8 +17,8 @@ function ProteinMolecule(game, x, y) {
     this.body.velocity.y = 100 * Math.random();
     this.animations.add('idle');
     this.animations.play('idle', 10, true);
-    this.body.height = 16;
-    this.body.width = 16;
+    this.body.height = 38;
+    this.body.width = 38;
     this.alive = true;
 };
 

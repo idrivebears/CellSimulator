@@ -49,5 +49,7 @@ WhiteBloodCell.prototype.secondElapsed = function() {
 };
 
 WhiteBloodCell.prototype.checkCollidedCell = function(commonCell) {
-    //if(commonCell.DNA)
+    if(commonCell.currentState == CC_STATES.DEATH) {
+        commonCell.kill();
+    }
 };
