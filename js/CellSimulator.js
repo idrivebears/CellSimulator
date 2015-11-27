@@ -9,7 +9,7 @@
     - Implement cell killing (removing from cell group, might be a bit tricky)
 */
 
-var DEBUG = false;
+var DEBUG = true;
 
 var SimulatorState = function(game) {
     this.commonCells = null;
@@ -32,7 +32,7 @@ SimulatorState.prototype.create = function() {
     background = this.game.add.sprite(0, 0, 'background');
 
     // Create initial common cells
-    var startingCells = 25;
+    var startingCells = 50;
     var startingSeed = "abcdefghijklmnop";
 
     this.commonCells = this.game.add.group();
@@ -57,6 +57,8 @@ SimulatorState.prototype.create = function() {
 
     cursors = this.game.input.keyboard.createCursorKeys();
 
+    game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
+
 };
 
 SimulatorState.prototype.update = function() {
@@ -78,6 +80,11 @@ SimulatorState.prototype.update = function() {
 
     //Call white blood cell update function
 };
+
+SimulatorState.prototype.onSecondElapsed = function() {
+    
+    this.game.time.events.add(Phaser.Timer.SECOND *, onSecondElapsed, this);
+}
 
 //Create new game with the simulator starting state
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');

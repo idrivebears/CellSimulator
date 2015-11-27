@@ -5,7 +5,6 @@
 var CC_STATES = {
     BORN : {value: 0, name: "BORN"},
     SEARCH_FOOD : {value: 1, name: "SEARCH_FOOD"},
-    SEARCH_WATER : {value: 2, name: "SEARCH_WATER"},
     SEARCH_MATE : {value: 3, name: "SEARCH_MATE"},
     DEATH: {value: 4, name:"DEATH"}
 };
@@ -18,12 +17,15 @@ function CommonCell(game, x, y, parentDNA) {
 
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
+    //how hungry the cell is, if it gets to 100, the cell dies.
+    this.hunger = 10;
+
     this.body.gravity.y = 0;
-    this.body.bounce.x = 0.7;
-    this.body.bounce.y = 0.7;
+    this.body.bounce.x = 1.0;
+    this.body.bounce.y = 1.0;
     this.body.collideWorldBounds = true;
-    this.body.velocity.x = 100 * Math.random();
-    this.body.velocity.y = 100 * Math.random();
+    this.body.velocity.x = 10;
+    this.body.velocity.y = 10;
     this.animations.add('idle');
     this.animations.play('idle', 10, true);
     this.body.height = 35;
@@ -54,8 +56,30 @@ CommonCell.prototype.updateCell = function() {
         this.text.x = this.body.x;
         this.text.y = this.body.y;    
     }
+
+    // Update cell states
+
+    if(this.currentState == CC_STATES.BORN) {
+        // set animation
+    }
+
+    else if(this.currentState == CC_STATES.SEARCH_FOOD) {
+        // set search food on
+    }
+
+    else if(this.currentState == CC_STATES.SEARCH_MATE) {
+        // set search mate on
+    }
+
+    else if(this.currentState == CC_STATES.DEATH) {
+        // set death animation
+    }
+
+
     
 };
+
+
 
 CommonCell.prototype.mutateDNA = function() {
     var result = "";
