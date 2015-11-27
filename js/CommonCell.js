@@ -97,9 +97,17 @@ CommonCell.prototype.moveCell = function() {
 };
 
 CommonCell.prototype.handleDeath = function() {
-    
-};
+    cells = this.game.world.children[1];
+    console.log(cells);
 
+    var tempCell = new CommonCell(this.game, this.x-5, this.y-5, this.DNA);
+    cells.add(tempCell);
+
+    tempCell = new CommonCell(this.game, this.x+5, this.y+5, this.DNA);
+    cells.add(tempCell);
+
+
+};
 
 CommonCell.prototype.updateCell = function() {
     this.moveCell();
