@@ -34,7 +34,7 @@ WhiteBloodCell.prototype = Object.create(Phaser.Sprite.prototype);
 WhiteBloodCell.prototype.constructor = WhiteBloodCell;
 
 WhiteBloodCell.prototype.moveCell = function() {
-
+    
 };
 
 WhiteBloodCell.prototype.updateCell = function() {

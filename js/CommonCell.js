@@ -31,6 +31,12 @@ function CommonCell(game, x, y, parentDNA) {
     this.body.height = 35;
     this.body.width = 35;
     this.alive = true;
+    //this.inputEnabled = true;
+    //this.input.enableDrag();
+
+    style = {font: "10px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: this.width, align: "center" };
+
+    text = game.add.text(x, y, this.DNA, style);
 };
 
 CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
@@ -42,6 +48,10 @@ CommonCell.prototype.moveCell = function() {
 
 CommonCell.prototype.updateCell = function() {
     this.moveCell();
+
+    text.x = this.x;
+    text.y = this.y;
+
 };
 
 CommonCell.prototype.mutateDNA = function() {

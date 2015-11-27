@@ -11,7 +11,7 @@
 */
 var SimulatorState = function(game) {
     this.commonCells = null;
-    this.whitebloodcells = null;
+    this.whiteBloodCells = null;
 };
 
 SimulatorState.prototype.preload = function() {
@@ -30,7 +30,7 @@ SimulatorState.prototype.create = function() {
     background = this.game.add.sprite(0, 0, 'background');
 
     // Create initial common cells
-    var startingCells = 5;
+    var startingCells = 25;
     var startingSeed = "abcdefghijklmnop";
 
     this.commonCells = this.game.add.group();
@@ -38,8 +38,19 @@ SimulatorState.prototype.create = function() {
 
     for(var i = 0; i < startingCells; i++) {
         var testCell = new CommonCell(this.game, Math.random()*100, Math.random()*100, startingSeed);
-        //this.game.world.add(testCell);
         this.commonCells.add(testCell);
+    }
+
+    // Create initial white blood cells
+    startingCells = 5;
+    var sicknessIndicator = ['z', 'w', 'x', 'y', 'r'];
+
+    this.whiteBloodCells = this.game.add.group();
+    this.commonCells.enableBody = true;
+
+    for(var i = 0; i < startingCells; i++) {
+        var testWhiteBloodCell = new WhiteBloodCell(this.game, Math.random()*100, Math.random()*100, sicknessIndicator);
+        this.whiteBloodCells.add(testWhiteBloodCell);
     }
 
     cursors = this.game.input.keyboard.createCursorKeys();
@@ -50,6 +61,8 @@ SimulatorState.prototype.update = function() {
 
     //Add collision between cells and other cells
     this.game.physics.arcade.collide(this.commonCells, this.commonCells);
+    this.game.physics.arcade.collide(this.commonCells, this.whiteBloodCells);
+    this.game.physics.arcade.collide(this.whiteBloodCells, this.whiteBloodCells);
     //this.game.physics.arcade.overlap(cells, cells, cellCollision, null, this);
 
     //Camera Movements
@@ -73,6 +86,10 @@ SimulatorState.prototype.update = function() {
     //Call cell update function
     this.commonCells.forEachAlive(function(cell){
         cell.updateCell();
+    }, this);
+
+    this.whiteBloodCells.forEachAlive(function(whiteBloodCell){
+        whiteBloodCell.updateCell();
     }, this);
 
     //Call white blood cell update function
