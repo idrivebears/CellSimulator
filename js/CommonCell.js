@@ -11,6 +11,7 @@ var CC_STATES = {
 
 function CommonCell(game, x, y, parentDNA) {
     Phaser.Sprite.call(this, game, x, y, 'commoncell');
+    this.game = game;
     this.DNA = parentDNA;
     this.DNA = this.mutateDNA();
     this.currentState = CC_STATES.BORN;
@@ -20,6 +21,9 @@ function CommonCell(game, x, y, parentDNA) {
     //how hungry the cell is, if it gets to 100, the cell dies.
     this.hunger = 1;
     this.mated = false;
+
+    this.isSelected = false;
+    this.selectionRectangle = game.add.graphics(this.body.x, this.body.y);
 
     this.body.gravity.y = 0;
     this.body.bounce.x = 1.0;
@@ -56,8 +60,14 @@ CommonCell.prototype.onDown=function(cell, cursor){
    
     this.game.add.sprite(20,20, 'ui');
     
+
      this.text = game.add.text(60, 40, "Cell Stats:", style);
+
+    
+
     this.text.anchor.set(0.5);
+
+    this.isSelected = true;
    
 
    
@@ -104,14 +114,23 @@ CommonCell.prototype.updateCell = function() {
     else if(this.currentState == CC_STATES.DEATH) {
         // set death animation
         this.tint = 0xFF195B;
+        this.width -= 1;
+        this.height -= 1;
+
+        if(this.width == 0 || this.height == 0) {
+            this.kill();
+        }
     }
 
-
+    if(this.isSelected == true) {
+        this.game.debug.renderSpriteBounds(this);
+        
+    }
     
 };
 
 CommonCell.prototype.secondElapsed = function() {
-    this.hunger += 2;
+    this.hunger += 10;
 };
 
 CommonCell.prototype.mutateDNA = function() {
