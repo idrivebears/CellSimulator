@@ -7,7 +7,7 @@ function ProteinMolecule(game, x, y) {
 
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
-    this.proteinValue = 10;
+    this.proteinValue = 15;
 
     this.body.gravity.y = 0;
     this.body.bounce.x = 1.0;
