@@ -12,8 +12,6 @@ var CC_STATES = {
 
 function CommonCell(game, x, y, parentDNA) {
     Phaser.Sprite.call(this, game, x, y, 'commoncell');
-    this.x = x;
-    this.y = y;
     this.DNA = parentDNA;
     this.DNA = this.mutateDNA();
     this.currentState = CC_STATES.BORN;
@@ -34,9 +32,11 @@ function CommonCell(game, x, y, parentDNA) {
     //this.inputEnabled = true;
     //this.input.enableDrag();
 
-    style = {font: "10px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: this.width, align: "center" };
-
-    text = game.add.text(x, y, this.DNA, style);
+    if(DEBUG == true) {
+        style = {font: "10px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: this.width, align: "center" };
+        this.text = game.add.text(x, y, this.DNA, style);    
+    }
+    
 };
 
 CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
@@ -49,9 +49,12 @@ CommonCell.prototype.moveCell = function() {
 CommonCell.prototype.updateCell = function() {
     this.moveCell();
 
-    text.x = this.x;
-    text.y = this.y;
-
+    if(DEBUG == true)
+    {
+        this.text.x = this.body.x;
+        this.text.y = this.body.y;    
+    }
+    
 };
 
 CommonCell.prototype.mutateDNA = function() {

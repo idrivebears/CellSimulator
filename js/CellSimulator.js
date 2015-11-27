@@ -1,6 +1,5 @@
 /*
     Project todo list:
-    - Abstract cells into their own class
     - Make cell automata for movement and cell life
     - Make cell DNA mutation system
     - Make cell reproduction system (adding elements to the cell group might be a bit hard)
@@ -9,6 +8,9 @@
     - Implement Bone Marrow (white blood cell creator)
     - Implement cell killing (removing from cell group, might be a bit tricky)
 */
+
+var DEBUG = false;
+
 var SimulatorState = function(game) {
     this.commonCells = null;
     this.whiteBloodCells = null;
@@ -64,24 +66,6 @@ SimulatorState.prototype.update = function() {
     this.game.physics.arcade.collide(this.commonCells, this.whiteBloodCells);
     this.game.physics.arcade.collide(this.whiteBloodCells, this.whiteBloodCells);
     //this.game.physics.arcade.overlap(cells, cells, cellCollision, null, this);
-
-    //Camera Movements
-    if (cursors.left.isDown)
-    {
-        this.game.camera.velocity.x -= 4;
-    }
-    else if (cursors.right.isDown)
-    {
-        this.game.camera.x += 4;
-    }
-    else if (cursors.up.isDown)
-    {
-        this.game.camera.y -= 4;
-    }
-    else if (cursors.down.isDown)
-    {
-        this.game.camera.y += 4;
-    }
 
     //Call cell update function
     this.commonCells.forEachAlive(function(cell){
