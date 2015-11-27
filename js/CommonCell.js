@@ -33,7 +33,9 @@ function CommonCell(game, x, y, parentDNA) {
     this.body.width = 35;
 
     this.alive = true;
-
+    this.inputEnabled = true;
+    this.input.useHandCursor = true;
+    this.events.onInputDown.add(this.onDown, this);
     //this.inputEnabled = true;
     //this.input.enableDrag();
 
@@ -46,6 +48,21 @@ function CommonCell(game, x, y, parentDNA) {
 
 CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
 CommonCell.prototype.constructor = CommonCell;
+
+CommonCell.prototype.onDown=function(cell, cursor){
+    var style = { font: "12px Courier", fill: "#000000", wordWrap: true, wordWrapWidth: this.width, align: "center" };
+   
+    this.completionSprite = game.add.graphics( 0, 0 );
+    this.completionSprite.beginFill(0xE1E1EA, 1);
+    this.completionSprite.bounds = new PIXI.Rectangle(0, 0, 200, 200);
+    this.completionSprite.drawRect(0, 0, 200, 200);
+    
+     this.text = game.add.text(45, 15, "Cell Stats:", style);
+    this.text.anchor.set(0.5);
+   
+
+   
+}
 
 CommonCell.prototype.moveCell = function() {
 
