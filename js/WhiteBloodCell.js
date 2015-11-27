@@ -5,7 +5,8 @@
 var WB_STATES = {
     BORN : {value: 0, name: "BORN"},
     SEARCH_SICKNESS : {value: 1, name: "SEARHC_SICKNESS"},
-    DEATH: {value: 2, name:"DEATH"}
+    KILL_MODE : {value: 2, name: "KILL_MODE"},
+    DEATH: {value: 3, name:"DEATH"}
 };
 
 function WhiteBloodCell(game, x, y, sicknessIndicator) {
@@ -14,6 +15,8 @@ function WhiteBloodCell(game, x, y, sicknessIndicator) {
     this.y = y;
     this.sicknessIndicator = sicknessIndicator;
     this.currentState = WB_STATES.BORN;
+
+    this.isKilling = false;
 
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
@@ -39,6 +42,27 @@ WhiteBloodCell.prototype.moveCell = function() {
 
 WhiteBloodCell.prototype.updateCell = function() {
     this.moveCell();
+
+    if(this.currentState == WB_STATES.BORN) {
+        // do born animation
+        this.currentState = WB_STATES.SEARCH_SICKNESS;
+    }
+
+    else if(this.currentState == WB_STATES.SEARCH_SICKNESS) {
+        if(this.isKilling == true) {
+            this.currentState = WB_STATES.KILL_MODE;
+        }
+
+    }
+
+    else if(this.currentState == WB_STATES.KILL_MODE) {
+        this.tint = 0xF123D1;
+    }
+
+    else if(this.currentState == WB_STATES.DEATH) {
+
+    }
+
 };
 
 WhiteBloodCell.prototype.secondElapsed = function() {

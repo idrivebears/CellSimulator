@@ -1,7 +1,7 @@
 /*
     CommonCell class
 
-    LEFT OFF: death handler now works, figure out how to spawn more cells
+    LEFT OFF: figuring out cell mutation
 */
 
 var CC_STATES = {
@@ -41,8 +41,15 @@ function CommonCell(game, x, y, parentDNA) {
     this.animations.add('idle');
     this.animations.play('idle', 10, true);
     
+    this.MAX_HEIGHT = 64;
+    this.MAX_WIDTH = 64;
+
     this.body.height = 35;
     this.body.width = 35;
+
+    //this.height = 1;
+    //this.width = 1;
+
 
     this.alive = true;
     this.inputEnabled = true;
@@ -72,10 +79,6 @@ CommonCell.prototype.constructor = CommonCell;
 
 CommonCell.prototype.onDown=function(cell, cursor){
     
-    
-   
-
-
     var style = { font: "14px Arial", fill: "#FFFFFF", wordWrap: false, wordWrapWidth: this.width, align: "center" };
     var style2= { font: "12px Arial", fill: "#FFFFFF", wordWrap: false, wordWrapWidth: this.width, align: "left" };
    
@@ -87,6 +90,7 @@ CommonCell.prototype.onDown=function(cell, cursor){
 
     this.isSelected = true;
    
+
 }
 
 CommonCell.prototype.escKey=function(){
@@ -94,27 +98,30 @@ CommonCell.prototype.escKey=function(){
     text1.visible=false;
     text2.visible=false;
     text3.visible=false;
-    text4.visible=false;
-
-    
-
-
-
-   
-};
-
+    text4.visible=false;    
+}
 
 CommonCell.prototype.moveCell = function() {
 
 };
 
 CommonCell.prototype.handleDeath = function() {
-    
-};
+    cells = this.game.world.children[1];
+    console.log(cells);
 
+    var tempCell = new CommonCell(this.game, this.x-5, this.y-5, this.DNA);
+    cells.add(tempCell);
+
+    tempCell = new CommonCell(this.game, this.x+5, this.y+5, this.DNA);
+    cells.add(tempCell);
+
+
+};
 
 CommonCell.prototype.updateCell = function() {
     this.moveCell();
+
+    //game.debug.renderPhysicsBody(this.body);
 
     if(DEBUG == true)
     {
@@ -125,8 +132,15 @@ CommonCell.prototype.updateCell = function() {
     // Update cell states
     //BORN STATE
     if(this.currentState == CC_STATES.BORN) {
+        
         // set animation
-        this.currentState = CC_STATES.SEARCH_FOOD;
+        //this.width += 1;
+        //this.height += 1;
+
+        if(/*this.width == this.MAX_WIDTH || this.height == this.MAX_HEIGHT*/true) {
+            this.currentState = CC_STATES.SEARCH_FOOD;
+        }
+
     }
     //SEARCHING FOR FOOD STATE
     else if(this.currentState == CC_STATES.SEARCH_FOOD) {
