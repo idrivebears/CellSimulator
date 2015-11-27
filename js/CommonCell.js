@@ -18,14 +18,14 @@ function CommonCell(game, x, y, parentDNA) {
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
     //how hungry the cell is, if it gets to 100, the cell dies.
-    this.hunger = 10;
+    this.hunger = 1;
 
     this.body.gravity.y = 0;
     this.body.bounce.x = 1.0;
     this.body.bounce.y = 1.0;
     this.body.collideWorldBounds = true;
-    this.body.velocity.x = 10;
-    this.body.velocity.y = 10;
+    this.body.velocity.x = Math.random() * 100;
+    this.body.velocity.y = Math.random() * 100;
     this.animations.add('idle');
     this.animations.play('idle', 10, true);
     this.body.height = 35;

@@ -19,6 +19,7 @@ var SimulatorState = function(game) {
 SimulatorState.prototype.preload = function() {
     this.game.load.image('background', 'assets/bg.png');
     this.game.load.spritesheet('commoncell', 'assets/CommonCell2_Sprite.png', 64, 64);
+    this.game.load.spritesheet('protein', 'assets/star.png', 32, 32);
     this.game.load.spritesheet('whitebloodcell', 'assets/WhiteBloodCell_Sprite.png', 64, 64);
 
 };
@@ -67,9 +68,9 @@ SimulatorState.prototype.update = function() {
 
     //Add collision between cells and other cells
     this.game.physics.arcade.collide(this.commonCells, this.commonCells);
-    this.game.physics.arcade.collide(this.commonCells, this.whiteBloodCells);
+    //this.game.physics.arcade.collide(this.commonCells, this.whiteBloodCells);
     this.game.physics.arcade.collide(this.whiteBloodCells, this.whiteBloodCells);
-    //this.game.physics.arcade.overlap(cells, cells, cellCollision, null, this);
+    this.game.physics.arcade.overlap(this.commonCells, this.whiteBloodCells, this.whiteBloodCellCollision, null, this);
 
     //Call cell update function
     this.commonCells.forEachAlive(function(cell){
@@ -83,6 +84,10 @@ SimulatorState.prototype.update = function() {
     //Call white blood cell update function
 };
 
+SimulatorState.prototype.whiteBloodCellCollision = function(commonCell, whiteBloodCell) {
+    whiteBloodCell.checkCollidedCell(commonCell);
+};
+
 SimulatorState.prototype.onSecondElapsed = function() {
     console.log("tick tick tick");
 
@@ -94,7 +99,7 @@ SimulatorState.prototype.onSecondElapsed = function() {
         whiteBloodCell.secondElapsed();
     }, this);
 
-    this.game.time.events.add(Phaser.Timer.SECOND * 1, onSecondElapsed, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
 }
 
 //Create new game with the simulator starting state

@@ -44,3 +44,7 @@ WhiteBloodCell.prototype.updateCell = function() {
 WhiteBloodCell.prototype.secondElapsed = function() {
     
 };
+
+WhiteBloodCell.prototype.checkCollidedCell = function(commonCell) {
+    //if(commonCell.DNA)
+};

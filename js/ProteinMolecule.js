@@ -2,8 +2,8 @@
     ProteinMolecule class
 */
 
-function WhiteBloodCell(game, x, y, sicknessIndicator) {
-    Phaser.Sprite.call(this, game, x, y, 'whitebloodcell');
+function ProteinMolecule(game, x, y) {
+    Phaser.Sprite.call(this, game, x, y, 'protein');
 
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
