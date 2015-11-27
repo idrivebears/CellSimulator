@@ -51,14 +51,12 @@ CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
 CommonCell.prototype.constructor = CommonCell;
 
 CommonCell.prototype.onDown=function(cell, cursor){
-    var style = { font: "12px Courier", fill: "#000000", wordWrap: true, wordWrapWidth: this.width, align: "center" };
+    //Phaser.Sprite.call(this,game,x,y, 'ui');
+    var style = { font: "12px Arial", fill: "#FFFFFF", wordWrap: false, wordWrapWidth: this.width, align: "left" };
    
-    this.completionSprite = game.add.graphics( 0, 0 );
-    this.completionSprite.beginFill(0xE1E1EA, 1);
-    this.completionSprite.bounds = new PIXI.Rectangle(0, 0, 200, 200);
-    this.completionSprite.drawRect(0, 0, 200, 200);
+    this.game.add.sprite(20,20, 'ui');
     
-     this.text = game.add.text(45, 15, "Cell Stats:", style);
+     this.text = game.add.text(60, 40, "Cell Stats:", style);
     this.text.anchor.set(0.5);
    
 

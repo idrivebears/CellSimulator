@@ -75,7 +75,7 @@ SimulatorState.prototype.create = function() {
     console.log("Setting 1s tick");
     this.game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
 
-    ui = this.game.add.sprite(30,35, 'ui');
+    
 
 };
 
