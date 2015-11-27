@@ -123,7 +123,7 @@ CommonCell.prototype.updateCell = function() {
     }
 
     if(this.isSelected == true) {
-        this.game.debug.renderSpriteBounds(this);
+        //this.game.debug.renderSpriteBounds(this);
         
     }
     
