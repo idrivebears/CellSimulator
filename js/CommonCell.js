@@ -83,20 +83,12 @@ CommonCell.prototype.onDown=function(cell, cursor){
     text1 = game.add.text(60, 30, "Cell Stats:" , style);
     text2= game.add.text(30, 60, "Generation: " , style2);
     text3= game.add.text(30,80, "Hunger: "+this.hunger, style2);
-    text4 = game.add.text(30,100, "Has Mated: "+this.mated, style2);
-
-    
-
-
-    
+    text4 = game.add.text(30,100, "Has Mated: "+this.isMated, style2);
 
     this.isSelected = true;
-
-
-    
-
    
 }
+
 CommonCell.prototype.escKey=function(){
     ui.visible=false;
     text1.visible=false;
@@ -180,6 +172,7 @@ CommonCell.prototype.updateCell = function() {
 
         this.tint = 0x3D4D52;
     }
+
     
 };
 
