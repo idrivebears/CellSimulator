@@ -69,6 +69,7 @@ function CommonCell(game, x, y, parentDNA) {
 CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
 CommonCell.prototype.constructor = CommonCell;
 
+
 CommonCell.prototype.onDown=function(cell, cursor){
     
     var style = { font: "14px Arial", fill: "#FFFFFF", wordWrap: false, wordWrapWidth: this.width, align: "center" };
@@ -181,6 +182,10 @@ CommonCell.prototype.secondElapsed = function() {
         this.matingTime--;
     }
     this.hunger += 1;
+     if(this.game.rnd.integerInRange(0,100)%2 === 0) {
+        this.body.velocity.y = this.body.velocity.y + this.game.rnd.integerInRange(-40, 40);
+        this.body.velocity.x = this.body.velocity.x + this.game.rnd.integerInRange(-40, 40);
+    }
 };
 
 CommonCell.prototype.mutateDNA = function() {
