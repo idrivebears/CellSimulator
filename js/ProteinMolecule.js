@@ -7,7 +7,7 @@ function ProteinMolecule(game, x, y) {
 
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
-    this.proteinValue = 5;
+    this.proteinValue = 10;
 
     this.body.gravity.y = 0;
     this.body.bounce.x = 1.0;
@@ -15,10 +15,10 @@ function ProteinMolecule(game, x, y) {
     this.body.collideWorldBounds = true;
     this.body.velocity.x = 100 * Math.random();
     this.body.velocity.y = 100 * Math.random();
-    //this.animations.add('idle');
-    //this.animations.play('idle', 10, true);
-    this.body.height = 32;
-    this.body.width = 32;
+    this.animations.add('idle');
+    this.animations.play('idle', 10, true);
+    this.body.height = 16;
+    this.body.width = 16;
     this.alive = true;
 };
 

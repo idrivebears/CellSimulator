@@ -64,10 +64,13 @@ CommonCell.prototype.updateCell = function() {
 
     if(this.currentState == CC_STATES.BORN) {
         // set animation
+        this.currentState = CC_STATES.SEARCH_FOOD;
     }
 
     else if(this.currentState == CC_STATES.SEARCH_FOOD) {
-        // set search food on
+        if(this.hunger <= 1) {
+            this.currentState = CC_STATES.SEARCH_MATE;
+        }
     }
 
     else if(this.currentState == CC_STATES.SEARCH_MATE) {
@@ -94,4 +97,9 @@ CommonCell.prototype.mutateDNA = function() {
         //Mutate based on probability
     }
     return result;
+};
+
+CommonCell.prototype.checkCollidedProtein = function(protein) {
+    this.hunger -= protein.proteinValue;
+    protein.kill();
 };

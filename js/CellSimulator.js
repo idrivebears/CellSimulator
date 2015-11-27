@@ -14,12 +14,16 @@ var DEBUG = false;
 var SimulatorState = function(game) {
     this.commonCells = null;
     this.whiteBloodCells = null;
+    this.proteins = null;
+
+    this.proteinsPerSecond = 5;
+    this.maxProteins = 50;
 };
 
 SimulatorState.prototype.preload = function() {
     this.game.load.image('background', 'assets/bg.png');
     this.game.load.spritesheet('commoncell', 'assets/CommonCell2_Sprite.png', 64, 64);
-    this.game.load.image('protein', 'assets/star.png');
+    this.game.load.spritesheet('protein', 'assets/protein.png', 64 ,64);
     this.game.load.spritesheet('whitebloodcell', 'assets/WhiteBloodCell_Sprite.png', 64, 64);
 
 };
@@ -60,7 +64,8 @@ SimulatorState.prototype.create = function() {
         this.whiteBloodCells.add(testWhiteBloodCell);
     }
 
-    cursors = this.game.input.keyboard.createCursorKeys();
+    this.proteins = this.game.add.group();
+    this.proteins.enableBody = true;
 
     //setting 1s tick
     console.log("Setting 1s tick");
@@ -73,23 +78,30 @@ SimulatorState.prototype.update = function() {
     //Add collision between cells and other cells
     this.game.physics.arcade.collide(this.commonCells, this.commonCells);
     //this.game.physics.arcade.collide(this.commonCells, this.whiteBloodCells);
+    // Set collisions between white blood cells and themselves
     this.game.physics.arcade.collide(this.whiteBloodCells, this.whiteBloodCells);
+    // Set collisions between common cells and white blood cells, handled by specific events
     this.game.physics.arcade.overlap(this.commonCells, this.whiteBloodCells, this.whiteBloodCellCollision, null, this);
+    // Set collisions between common cells and proteins, handled by specific event
+    this.game.physics.arcade.overlap(this.commonCells, this.proteins, this.proteinCollision, null, this);
 
     //Call cell update function
     this.commonCells.forEachAlive(function(cell){
         cell.updateCell();
     }, this);
 
+    //Call white blood cell update function
     this.whiteBloodCells.forEachAlive(function(whiteBloodCell){
         whiteBloodCell.updateCell();
     }, this);
-
-    //Call white blood cell update function
 };
 
 SimulatorState.prototype.whiteBloodCellCollision = function(commonCell, whiteBloodCell) {
     whiteBloodCell.checkCollidedCell(commonCell);
+};
+
+SimulatorState.prototype.proteinCollision = function(commonCell, protein) {
+    commonCell.checkCollidedProtein(protein);
 };
 
 SimulatorState.prototype.onSecondElapsed = function() {
@@ -104,13 +116,20 @@ SimulatorState.prototype.onSecondElapsed = function() {
     }, this);
 
     //Generate random food every second
-    for(var i = 0; i < 5 ; i++)
-    {
-        var randx = this.game.rnd.integerInRange(0, this.game.width);
-        var randy = this.game.rnd.integerInRange(0, this.game.height);
-        var tempProtein = new ProteinMolecule(this.game, randx, randy);
-        this.game.world.add(tempProtein);
+
+    if(this.proteins.countLiving() < this.maxProteins) {
+        for(var i = 0; i < this.proteinsPerSecond ; i++)
+        {
+            var randx = this.game.rnd.integerInRange(0, this.game.width);
+            var randy = this.game.rnd.integerInRange(0, this.game.height);
+            var tempProtein = new ProteinMolecule(this.game, randx, randy);
+            this.proteins.add(tempProtein);
+        }
     }
+    else {
+        console.log("Max food reached");
+    }
+
 
     this.game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
 }
