@@ -48,9 +48,16 @@ function CommonCell(game, x, y, parentDNA) {
     this.inputEnabled = true;
     this.input.useHandCursor = true;
     this.events.onInputDown.add(this.onDown, this);
+
+
+    
+    var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+    space_key.onDown.add(this.escKey, this); 
+
     this.events.onKilled.add(this.handleDeath, this)
+
     //this.inputEnabled = true;
-    //this.input.enableDrag();
+    
 
     if(DEBUG == true) {
         style = {font: "10px Arial", fill: "#ff0044", wordWrap: true, wordWrapWidth: this.width, align: "center" };
@@ -63,21 +70,44 @@ CommonCell.prototype = Object.create(Phaser.Sprite.prototype);
 CommonCell.prototype.constructor = CommonCell;
 
 CommonCell.prototype.onDown=function(cell, cursor){
-    //Phaser.Sprite.call(this,game,x,y, 'ui');
-    var style = { font: "12px Arial", fill: "#FFFFFF", wordWrap: false, wordWrapWidth: this.width, align: "left" };
+    
+    
    
-    this.game.add.sprite(20,20, 'ui');
+
+
+    var style = { font: "14px Arial", fill: "#FFFFFF", wordWrap: false, wordWrapWidth: this.width, align: "center" };
+    var style2= { font: "12px Arial", fill: "#FFFFFF", wordWrap: false, wordWrapWidth: this.width, align: "left" };
+   
+    ui=game.add.sprite(20,20, 'ui');
+    text1 = game.add.text(60, 30, "Cell Stats:" , style);
+    text2= game.add.text(30, 60, "Generation: " , style2);
+    text3= game.add.text(30,80, "Hunger: "+this.hunger, style2);
+    text4 = game.add.text(30,100, "Has Mated: "+this.mated, style2);
+
+
     
-
-    this.text = game.add.text(60, 40, "Cell Stats:", style);
-
-    
-
-    this.text.anchor.set(0.5);
 
     this.isSelected = true;
+
+
+    
+
+   
+}
+CommonCell.prototype.escKey=function(){
+    ui.visible=false;
+    text1.visible=false;
+    text2.visible=false;
+    text3.visible=false;
+    text4.visible=false;
+
+    
+}
+
+
    
 };
+
 
 CommonCell.prototype.moveCell = function() {
 

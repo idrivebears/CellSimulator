@@ -73,6 +73,7 @@ SimulatorState.prototype.create = function() {
     console.log("Setting 1s tick");
     this.game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
 
+
 };
 
 SimulatorState.prototype.update = function() {
@@ -142,6 +143,8 @@ SimulatorState.prototype.onSecondElapsed = function() {
 
     this.game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
 }
+
+
 
 //Create new game with the simulator starting state
 var game = new Phaser.Game(1280, 600, Phaser.AUTO, 'game');
