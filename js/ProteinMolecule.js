@@ -7,26 +7,22 @@ function ProteinMolecule(game, x, y) {
 
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
+    this.proteinValue = 5;
+
     this.body.gravity.y = 0;
-    this.body.bounce.x = 1.1;
-    this.body.bounce.y = 1.1;
+    this.body.bounce.x = 1.0;
+    this.body.bounce.y = 1.0;
     this.body.collideWorldBounds = true;
     this.body.velocity.x = 100 * Math.random();
     this.body.velocity.y = 100 * Math.random();
-    this.animations.add('idle');
-    this.animations.play('idle', 10, true);
-    this.body.height = 35;
-    this.body.width = 35;
+    //this.animations.add('idle');
+    //this.animations.play('idle', 10, true);
+    this.body.height = 32;
+    this.body.width = 32;
     this.alive = true;
 };
 
-WhiteBloodCell.prototype = Object.create(Phaser.Sprite.prototype);
-WhiteBloodCell.prototype.constructor = WhiteBloodCell;
+ProteinMolecule.prototype = Object.create(Phaser.Sprite.prototype);
+ProteinMolecule.prototype.constructor = ProteinMolecule;
 
-WhiteBloodCell.prototype.moveCell = function() {
 
-};
-
-WhiteBloodCell.prototype.updateCell = function() {
-    this.moveCell();
-};

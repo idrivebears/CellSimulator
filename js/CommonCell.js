@@ -28,9 +28,12 @@ function CommonCell(game, x, y, parentDNA) {
     this.body.velocity.y = Math.random() * 100;
     this.animations.add('idle');
     this.animations.play('idle', 10, true);
+    
     this.body.height = 35;
     this.body.width = 35;
+
     this.alive = true;
+
     //this.inputEnabled = true;
     //this.input.enableDrag();
 

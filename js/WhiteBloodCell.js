@@ -42,7 +42,10 @@ WhiteBloodCell.prototype.updateCell = function() {
 };
 
 WhiteBloodCell.prototype.secondElapsed = function() {
-    
+    if(this.game.rnd.integerInRange(0,100)%2 === 0) {
+        this.body.velocity.y = this.body.velocity.y + this.game.rnd.integerInRange(-20, 20);
+        this.body.velocity.x = this.body.velocity.x + this.game.rnd.integerInRange(-20, 20);
+    }
 };
 
 WhiteBloodCell.prototype.checkCollidedCell = function(commonCell) {
