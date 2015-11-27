@@ -40,3 +40,7 @@ WhiteBloodCell.prototype.moveCell = function() {
 WhiteBloodCell.prototype.updateCell = function() {
     this.moveCell();
 };
+
+WhiteBloodCell.prototype.secondElapsed = function() {
+    
+};

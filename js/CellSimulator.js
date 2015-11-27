@@ -82,8 +82,15 @@ SimulatorState.prototype.update = function() {
 };
 
 SimulatorState.prototype.onSecondElapsed = function() {
-    
-    this.game.time.events.add(Phaser.Timer.SECOND *, onSecondElapsed, this);
+    this.commonCells.forEachAlive(function(cell){
+        cell.secondElapsed();
+    }, this);
+
+    this.whiteBloodCells.forEachAlive(function(whiteBloodCell){
+        whiteBloodCell.secondElapsed();
+    }, this);
+
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, onSecondElapsed, this);
 }
 
 //Create new game with the simulator starting state

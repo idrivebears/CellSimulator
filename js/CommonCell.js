@@ -79,7 +79,9 @@ CommonCell.prototype.updateCell = function() {
     
 };
 
-
+CommonCell.prototype.secondElapsed = function() {
+    this.hunger += 2;
+};
 
 CommonCell.prototype.mutateDNA = function() {
     var result = "";
