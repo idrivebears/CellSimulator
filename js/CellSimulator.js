@@ -57,7 +57,9 @@ SimulatorState.prototype.create = function() {
 
     cursors = this.game.input.keyboard.createCursorKeys();
 
-    game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
+    //setting 1s tick
+    console.log("Setting 1s tick");
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
 
 };
 
@@ -82,6 +84,8 @@ SimulatorState.prototype.update = function() {
 };
 
 SimulatorState.prototype.onSecondElapsed = function() {
+    console.log("tick tick tick");
+
     this.commonCells.forEachAlive(function(cell){
         cell.secondElapsed();
     }, this);
