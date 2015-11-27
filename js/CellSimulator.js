@@ -90,7 +90,7 @@ SimulatorState.prototype.onSecondElapsed = function() {
         whiteBloodCell.secondElapsed();
     }, this);
 
-    this.game.time.events.add(Phaser.Timer.SECOND * 1, onSecondElapsed, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, this.onSecondElapsed, this);
 }
 
 //Create new game with the simulator starting state
