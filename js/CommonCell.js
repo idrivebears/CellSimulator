@@ -1,12 +1,15 @@
 /*
     CommonCell class
+
+    LEFT OFF: death handler now works, figure out how to spawn more cells
 */
 
 var CC_STATES = {
     BORN : {value: 0, name: "BORN"},
     SEARCH_FOOD : {value: 1, name: "SEARCH_FOOD"},
     SEARCH_MATE : {value: 3, name: "SEARCH_MATE"},
-    DEATH: {value: 4, name:"DEATH"}
+    MATING : {value: 4, name: "MATING"},
+    DEATH: {value: 5, name:"DEATH"}
 };
 
 function CommonCell(game, x, y, parentDNA) {
@@ -19,8 +22,12 @@ function CommonCell(game, x, y, parentDNA) {
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
     //how hungry the cell is, if it gets to 100, the cell dies.
-    this.hunger = 1;
-    this.mated = false;
+    this.hunger = 30;
+    this.isMated = false;
+    this.isAvailable = true;
+    this.isMatingFinished = false;
+    this.partner = null;
+    this.matingTime = 8; //in secs
 
     this.isSelected = false;
     this.selectionRectangle = game.add.graphics(this.body.x, this.body.y);
@@ -41,6 +48,7 @@ function CommonCell(game, x, y, parentDNA) {
     this.inputEnabled = true;
     this.input.useHandCursor = true;
     this.events.onInputDown.add(this.onDown, this);
+    this.events.onKilled.add(this.handleDeath, this)
     //this.inputEnabled = true;
     //this.input.enableDrag();
 
@@ -61,7 +69,7 @@ CommonCell.prototype.onDown=function(cell, cursor){
     this.game.add.sprite(20,20, 'ui');
     
 
-     this.text = game.add.text(60, 40, "Cell Stats:", style);
+    this.text = game.add.text(60, 40, "Cell Stats:", style);
 
     
 
@@ -69,13 +77,16 @@ CommonCell.prototype.onDown=function(cell, cursor){
 
     this.isSelected = true;
    
-
-   
-}
+};
 
 CommonCell.prototype.moveCell = function() {
 
 };
+
+CommonCell.prototype.handleDeath = function() {
+    alert("died for sins");
+};
+
 
 CommonCell.prototype.updateCell = function() {
     this.moveCell();
@@ -87,12 +98,12 @@ CommonCell.prototype.updateCell = function() {
     }
 
     // Update cell states
-
+    //BORN STATE
     if(this.currentState == CC_STATES.BORN) {
         // set animation
         this.currentState = CC_STATES.SEARCH_FOOD;
     }
-
+    //SEARCHING FOR FOOD STATE
     else if(this.currentState == CC_STATES.SEARCH_FOOD) {
         if(this.hunger <= 1) {
             this.currentState = CC_STATES.SEARCH_MATE;
@@ -100,37 +111,64 @@ CommonCell.prototype.updateCell = function() {
         if(this.hunger >= 100) {
             this.currentState = CC_STATES.DEATH;
         }
-    }
 
+        this.tint = 0x75FFBF;
+    }
+    //SEARCHING FOR MATE <3
     else if(this.currentState == CC_STATES.SEARCH_MATE) {
-        if(this.hunger >= 50) {
+        if(this.hunger >= 40) {
             this.currentState = CC_STATES.SEARCH_FOOD;
         }
-        if(this.mated == true) {
+        if(this.isMated == true) {
+            this.currentState = CC_STATES.MATING;
+        }
+        this.tint = 0xFF7AEB;
+    }
+    //MATING STATE
+    else if(this.currentState == CC_STATES.MATING) {
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
+
+        if(this.isMatingFinished == true) {
             this.currentState = CC_STATES.DEATH;
         }
-    }
 
+        this.tint = 0xD9020D;
+    }
+    //DEATH STATE
     else if(this.currentState == CC_STATES.DEATH) {
         // set death animation
-        this.tint = 0xFF195B;
         this.width -= 1;
         this.height -= 1;
 
         if(this.width == 0 || this.height == 0) {
             this.kill();
         }
-    }
 
-    if(this.isSelected == true) {
-        //this.game.debug.renderSpriteBounds(this);
-        
+        this.tint = 0x3D4D52;
     }
     
 };
 
+CommonCell.prototype.checkCommonCellCollision = function(commonCell) {
+    if(this === commonCell){
+        return;
+    }
+    if(this.currentState == CC_STATES.SEARCH_MATE && this.isMated == false &&commonCell.isMated == false && commonCell.currentState == CC_STATES.SEARCH_MATE) {
+        this.isMated = true;
+        this.partner = commonCell;
+        commonCell.isMated = true;
+    }
+};
+
 CommonCell.prototype.secondElapsed = function() {
-    this.hunger += 10;
+    if(this.matingTime == 0) {
+        this.isMatingFinished = true;
+    }
+    if(this.isMated == true) {
+        this.matingTime--;
+    }
+    this.hunger += 1;
 };
 
 CommonCell.prototype.mutateDNA = function() {
@@ -144,6 +182,8 @@ CommonCell.prototype.mutateDNA = function() {
 };
 
 CommonCell.prototype.checkCollidedProtein = function(protein) {
-    this.hunger -= protein.proteinValue;
-    protein.kill();
+    if(this.currentState == CC_STATES.SEARCH_FOOD) {
+        this.hunger -= protein.proteinValue;
+        protein.kill();
+    }
 };
