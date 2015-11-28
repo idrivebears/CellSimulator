@@ -219,7 +219,7 @@ CommonCell.prototype.mutateDna = function() {
     {
         if(this.game.rnd.integerInRange(0,50) % 7 == 0)
         {
-            result += this.ALPHABET[this.game.rnd.integerInRange(0,this.ALPHABET.length)];
+            result += this.ALPHABET[this.game.rnd.integerInRange(0,this.ALPHABET.length-1)];
         }
         else{
             result += this.DNA[i];
